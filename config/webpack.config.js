@@ -2,6 +2,31 @@ const path = require('path')
 const webpack = require('webpack');
 
 const appDirectory = path.resolve(__dirname, '../');
+
+// TODO: check babel config
+const babelLoaderConfiguration = {
+  test: /\.js$/,
+  // Add every directory that needs to be compiled by Babel during the build
+  include: [
+    path.resolve(appDirectory, 'index.web.js'),
+    path.resolve(appDirectory, 'src'),
+    path.resolve(appDirectory, 'node_modules/react-navigation'),
+    path.resolve(appDirectory, 'node_modules/react-native-tab-view')
+  ],
+
+  use: {
+    loader: 'babel-loader',
+    options: {
+      cacheDirectory: true,
+      // This aliases 'react-native' to 'react-native-web' and includes only
+      // the modules needed by the app
+      plugins: ['react-native-web'],
+      // The 'react-native' preset is recommended (or use your own .babelrc)
+      presets: ['react-native']
+    }
+  }
+};
+
 module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
@@ -33,6 +58,9 @@ module.exports = {
           }
         }
       }
+    ],
+    rules: [
+      babelLoaderConfiguration,
     ]
   },
   resolve: {
