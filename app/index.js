@@ -1,36 +1,32 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-import React, { Component } from 'react';
+import React from 'react';
+import { AppRegistry } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
 import {
-AppRegistry,
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+  createReduxBoundAddListener,
+  createReactNavigationReduxMiddleware,
+} from 'react-navigation-redux-helpers';
+import AppReducer from './reducers/AppReducer';
+import AppWithNavigationState from './components/AppNavigator';
 
-import { StackNavigator } from 'react-navigation';
+const middleware = createReactNavigationReduxMiddleware(
+  "root",
+  state => state.nav,
+);
+const addListener = createReduxBoundAddListener("root");
 
-import { styles } from './config/styles.js';
 
-import { HomeScreen } from './screens/HomeScreen.js';
-import { ForwardScreen } from './screens/ForwardScreen.js';
-import { NightModeScreen } from './screens/NightModeScreen.js';
+export default class App extends React.Component {
+  store = createStore(
+    AppReducer,
+    applyMiddleware(middleware),
+  );
 
-const IotExpoWebApp = StackNavigator({
-  Home: { screen: HomeScreen },
-  Forward: { screen: ForwardScreen },
-  NightMode: { screen: NightModeScreen }
-});
-
-export default class App extends Component {
   render() {
-    return(
-        <IotExpoWebApp />
+    return (
+      <Provider store={this.store}>
+        <AppWithNavigationState addListener={ addListener } />
+      </Provider>
     );
   }
 }
