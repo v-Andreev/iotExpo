@@ -2,6 +2,7 @@ import React from 'react';
 import { AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import {
   createReduxBoundAddListener,
   createReactNavigationReduxMiddleware,
@@ -19,8 +20,9 @@ const addListener = createReduxBoundAddListener("root");
 export default class App extends React.Component {
   store = createStore(
     AppReducer,
-    applyMiddleware(middleware),
-  );
+    composeWithDevTools(
+      applyMiddleware(middleware),
+    ));
 
   render() {
     return (
