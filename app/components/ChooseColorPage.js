@@ -18,7 +18,7 @@ class ChooseColorPage extends Component {
           <Button
             key={key}
             title={COLORS[key].name}
-            color={COLORS[key].hexCode}
+            // color={COLORS[key].hexCode}
             onPress={() => this.onSelectColor(key)}
           />
         ))}

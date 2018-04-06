@@ -8,6 +8,9 @@ class MainPage extends Component {
   onChooseColor() {
     this.props.navigation.navigate('ChooseColor');
   }
+  onFetchPage() {
+    this.props.navigation.navigate('FetchPage');
+  }
 
   selectedColor() {
     const { colorName } = this.props;
@@ -25,12 +28,12 @@ class MainPage extends Component {
         <TouchableHighlight
           style={{
             alignItems: 'center',
-            backgroundColor: '#7ba7dd',
+            backgroundColor: '#ffffff',
             padding: 10
           }}
-          onPress={this.onChooseColor.bind(this)}
+          onPress={this.onFetchPage.bind(this)}
         >
-          <Text> Touch Here </Text>
+          <Text style={{ color: '#6b68bb' }}> Go to FetchPage </Text>
         </TouchableHighlight>
       </View>
     )

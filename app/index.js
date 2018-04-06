@@ -2,6 +2,7 @@ import React from 'react';
 import { AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import {
   createReduxBoundAddListener,
@@ -10,10 +11,17 @@ import {
 import AppReducer from './reducers/AppReducer';
 import AppWithNavigationState from './components/AppNavigator';
 
-const middleware = createReactNavigationReduxMiddleware(
-  "root",
-  state => state.nav,
-);
+// const middleware = createReactNavigationReduxMiddleware(
+//   "root",
+//   state => state.nav,
+// );
+const middleware = [
+  createReactNavigationReduxMiddleware(
+    "root",
+    state => state.nav,
+  ),
+  thunk,
+]
 const addListener = createReduxBoundAddListener("root");
 
 
@@ -21,7 +29,7 @@ export default class App extends React.Component {
   store = createStore(
     AppReducer,
     composeWithDevTools(
-      applyMiddleware(middleware),
+      applyMiddleware(...middleware),
     ));
 
   render() {

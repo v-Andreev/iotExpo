@@ -3,14 +3,18 @@ import { addNavigationHelpers, StackNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import MainPage from './MainPage';
 import ChooseColorPage from './ChooseColorPage'
+import FetchPage from './FetchPage'
 
 export const AppNavigator = StackNavigator({
   Main: { screen: MainPage },
+  FetchPage: {
+    screen: FetchPage,
+    navigationOptions: {
+      title: 'Fetch Page',
+    }
+  },
   ChooseColor: {
     screen: ChooseColorPage,
-   /* navigationOptions: {
-      headerLeft: null,
-    }*/
   },
 },
 { initialRouteName: 'Main' });
